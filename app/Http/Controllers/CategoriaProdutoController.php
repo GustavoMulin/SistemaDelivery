@@ -13,7 +13,7 @@ class CategoriaProdutoController
      */
     public function index()
     {
-        //
+        return response()->json(CategoriaProduto::all());
     }
 
     /**
@@ -21,15 +21,40 @@ class CategoriaProdutoController
      */
     public function store(StoreCategoriaProdutoRequest $request)
     {
-        //
+        try {
+            $categoriaProduto = CategoriaProduto::created($request->validate());
+            return response()->json([
+                'message' => 'Categoria de Produto cadastrada com sucesso!',
+                'data' => $categoriaProduto
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao cadastrar Categoria de Produto',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(CategoriaProduto $categoriaProduto)
+    public function show($id)
     {
-        //
+        try {
+            $categoriaProduto = CategoriaProduto::with('categoriaProdutos')->where('id', $id)->first();
+
+            if(!$categoriaProduto) {
+                return response()->json([
+                    'message' => 'Categoria de Produto não encontrada',
+                    'data' => $categoriaProduto
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar Categoria de Produto',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -37,14 +62,38 @@ class CategoriaProdutoController
      */
     public function update(UpdateCategoriaProdutoRequest $request, CategoriaProduto $categoriaProduto)
     {
-        //
+        $categoriaProduto->update($request->validated());
+
+        return response()->json([
+            'message' => 'Categoria de Produto atualizada com sucesso!',
+            'data' => $categoriaProduto
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CategoriaProduto $categoriaProduto)
+    public function destroy($id)
     {
-        //
+        try {
+            $categoriaProduto = CategoriaProduto::where('id', $id)->first();
+
+            if(!$categoriaProduto) {
+                return response()->json([
+                    'message' => 'Categoria de Produto não encontrada',
+                ]);
+            }
+
+            $categoriaProduto->delete();
+
+            return response()->json([
+                'message' => 'Categoria de Produto deletada com sucesso!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao deletar Categoria de Produto',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }

@@ -13,7 +13,7 @@ class ItemPedidoController
      */
     public function index()
     {
-        //
+        return response()->json(ItemPedido::all());
     }
 
     /**
@@ -21,15 +21,40 @@ class ItemPedidoController
      */
     public function store(StoreItemPedidoRequest $request)
     {
-        //
+        try {
+            $itemPedido = ItemPedido::create($request->validated());
+            return response()->json([
+                'message' => 'Item do pedido cadastrado com sucesso!',
+                'data' => $itemPedido
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Erro ao cadastrar item do pedido',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ItemPedido $itemPedido)
+    public function show($id)
     {
-        //
+        try {
+            $itemPedido = ItemPedido::with('itemPedidos')->where('id', $id)->first();
+
+            if(!$itemPedido) {
+                return response()->json([
+                    'message' => 'Item do pedido não encontrado',
+                    'data' => $itemPedido
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar item do pedido',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -37,14 +62,38 @@ class ItemPedidoController
      */
     public function update(UpdateItemPedidoRequest $request, ItemPedido $itemPedido)
     {
-        //
+        $itemPedido->update($request->validated());
+
+        return response()->json([
+            'message' => 'Item do pedido atualizado com sucesso!',
+            'data' => $itemPedido
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ItemPedido $itemPedido)
+    public function destroy($id)
     {
-        //
+        try {
+            $itemPedido = ItemPedido::where('id', $id)->first();
+
+            if(!$itemPedido) {
+                return response()->json([
+                    'message' => 'Item do pedido não encontrado',
+                ]);
+            }
+
+            $itemPedido->delete();
+
+            return response()->json([
+                'message' => 'Item do pedido deletado com sucesso!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao deletar item do pedido',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
