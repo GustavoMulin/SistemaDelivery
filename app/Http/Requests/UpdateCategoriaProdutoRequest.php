@@ -11,7 +11,7 @@ class UpdateCategoriaProdutoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class UpdateCategoriaProdutoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required|string|max:100',
+            'restaurante_id' => 'required|exists:restaurantes,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.required' => 'O nome da categoria é obrigatório.',
+            'restaurante_id.required' => 'O restaurante é obrigatório.',
+            'restaurante_id.exists' => 'O restaurante informado não existe.',
         ];
     }
 }

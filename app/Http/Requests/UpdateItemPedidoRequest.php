@@ -11,7 +11,7 @@ class UpdateItemPedidoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,18 @@ class UpdateItemPedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'pedido_id' => 'required|exists:pedidos,id',
+            'produto_id' => 'required|exists:produtos,id',
+            'quantidade' => 'required|integer|min:1',
+            'preco' => 'required|numeric|min:0',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'pedido_id.required' => 'O pedido é obrigatório.',
+            'produto_id.required' => 'O produto é obrigatório.',
         ];
     }
 }

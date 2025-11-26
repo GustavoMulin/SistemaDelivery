@@ -11,7 +11,7 @@ class StoreEnderecoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,23 @@ class StoreEnderecoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'rua' => 'required|string|max:150',
+            'numero' => 'required|string|max:20',
+            'bairro' => 'required|string|max:100',
+            'cidade' => 'required|string|max:100',
+            'estado' => 'required|string|max:100',
+            'cep' => 'required|string|max:9',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'usuario_id.required' => 'O usuário é obrigatório.',
+            'usuario_id.exists' => 'O usuário informado não existe.',
+            'rua.required' => 'A rua é obrigatório.',
+            'cep.required' => 'O CEP é obrigatório.',
         ];
     }
 }

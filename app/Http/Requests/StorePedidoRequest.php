@@ -11,7 +11,7 @@ class StorePedidoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StorePedidoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'restaurante_id' => 'required|exists:restaurantes,id',
+            'endereco_id' => 'required|exists:enderecos,id',
+            'status' => 'required|string|in:pendente,confirmado,em_preparo,em_transito,entregue,cancelado',
+            'total' => 'required|numeric|min:0',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_id.required' => 'O usuário é obrigatório.',
+            'restaurante_id.exists' => 'O restaurante selecionado não existe.',
+            'total.required' => 'O total do pedido é obrigatório.',
         ];
     }
 }

@@ -11,7 +11,7 @@ class StoreProdutoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class StoreProdutoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nome' => 'required|string|max:150',
+            'preco' => 'required|numeric|min:0',
+            'descricao' => 'nullable|string',
+            'categoria_id' => 'required|exists:categorias,id',
+            'restaurante_id' => 'required|exists:restaurantes,id',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'nome.required' => 'O nome do produto é obrigatório.',
+            'preco.required' => 'O preço do produto é obrigatório.',
+            'preco.numeric' => 'O preço do produto deve ser um número válido.',
+            'categoria_id.exists' => 'A categoria selecionada é inválida.',
         ];
     }
 }
