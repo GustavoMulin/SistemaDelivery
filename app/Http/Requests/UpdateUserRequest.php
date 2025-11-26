@@ -12,7 +12,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|min:3|max:255',
+            'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
         ];
@@ -21,12 +21,12 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'nome.required' => 'O campo nome é obrigatório.',
+            'name.required' => 'O campo nome é obrigatório.',
             'email.required' => 'O campo email é obrigatório.',
             'email.email' => 'O campo email deve ser um endereço de email válido.',
             'email.unique' => 'O email informado já está cadastrado.',
-            'senha.required' => 'A é obrigatório.',
-            'senha.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            'password.required' => 'A é obrigatório.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
         ];
     }
 }

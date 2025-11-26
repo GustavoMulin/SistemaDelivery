@@ -22,7 +22,7 @@ class RestauranteController
     public function store(StoreRestauranteRequest $request)
     {
         try {
-            $restaurante = Restaurante::created($request->validate());
+            $restaurante = Restaurante::create($request->validated());
             return response()->json([
                 'message' => 'Restaurante cadastrado com sucesso!',
                 'data' => $restaurante
@@ -43,7 +43,7 @@ class RestauranteController
         try {
             $restaurante = Restaurante::with('restaurantes')->where('id', $id)->first();
 
-            if(!$restaurante) {
+            if (!$restaurante) {
                 return response()->json([
                     'message' => 'Restaurante não encontrado',
                     'data' => $restaurante
@@ -78,7 +78,7 @@ class RestauranteController
         try {
             $restaurante = Restaurante::where('id', $id)->first();
 
-            if(!$restaurante) {
+            if (!$restaurante) {
                 return response()->json([
                     'message' => 'Restaurante não encontrado',
                 ]);

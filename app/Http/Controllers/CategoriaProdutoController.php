@@ -22,7 +22,7 @@ class CategoriaProdutoController
     public function store(StoreCategoriaProdutoRequest $request)
     {
         try {
-            $categoriaProduto = CategoriaProduto::created($request->validate());
+            $categoriaProduto = CategoriaProduto::create($request->validated());
             return response()->json([
                 'message' => 'Categoria de Produto cadastrada com sucesso!',
                 'data' => $categoriaProduto
@@ -43,7 +43,7 @@ class CategoriaProdutoController
         try {
             $categoriaProduto = CategoriaProduto::with('categoriaProdutos')->where('id', $id)->first();
 
-            if(!$categoriaProduto) {
+            if (!$categoriaProduto) {
                 return response()->json([
                     'message' => 'Categoria de Produto não encontrada',
                     'data' => $categoriaProduto
@@ -78,7 +78,7 @@ class CategoriaProdutoController
         try {
             $categoriaProduto = CategoriaProduto::where('id', $id)->first();
 
-            if(!$categoriaProduto) {
+            if (!$categoriaProduto) {
                 return response()->json([
                     'message' => 'Categoria de Produto não encontrada',
                 ]);

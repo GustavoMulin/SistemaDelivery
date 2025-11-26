@@ -22,7 +22,7 @@ class EnderecoController
     public function store(StoreEnderecoRequest $request)
     {
         try {
-            $endereco = Endereco::created($request->validate());
+            $endereco = Endereco::create($request->validated());
             return response()->json([
                 'message' => 'Endereço cadastrado com sucesso!',
                 'data' => $endereco
@@ -43,7 +43,7 @@ class EnderecoController
         try {
             $endereco = Endereco::with('enderecos')->where('id', $id)->first();
 
-            if(!$endereco) {
+            if (!$endereco) {
                 return response()->json([
                     'message' => 'Endereço não encontrado',
                     'data' => $endereco
@@ -78,7 +78,7 @@ class EnderecoController
         try {
             $endereco = Endereco::where('id', $id)->first();
 
-            if(!$endereco) {
+            if (!$endereco) {
                 return response()->json([
                     'message' => 'Endereço não encontrado',
                 ]);

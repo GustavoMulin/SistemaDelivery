@@ -22,7 +22,7 @@ class UserController
     public function store(StoreUserRequest $request)
     {
         try {
-            $user = User::created($request->validate());
+            $user = User::create($request->validated());
             return response()->json([
                 'message' => 'Usuário cadastrado com sucesso!',
                 'data' => $user
@@ -43,7 +43,7 @@ class UserController
         try {
             $user = User::with('users')->where('id', $id)->first();
 
-            if(!$user) {
+            if (!$user) {
                 return response()->json([
                     'message' => 'Usuário não encontrado',
                     'data' => $user
@@ -78,7 +78,7 @@ class UserController
         try {
             $user = User::where('id', $id)->first();
 
-            if(!$user) {
+            if (!$user) {
                 return response()->json([
                     'message' => 'Usuário não encontrado',
                 ]);
