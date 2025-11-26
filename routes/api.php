@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
@@ -15,4 +16,5 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('pedidos', PedidoController::class);
     Route::apiResource('itemspedidos', PedidoController::class);
     Route::apiResource('enderecos', EnderecoController::class);
+    Route::apiResource('categoriaprodutos', CategoriaProdutoController::class);
 });
