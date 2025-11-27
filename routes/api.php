@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaProdutoController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\ItemPedidoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\RestauranteController;
@@ -14,7 +15,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('restaurantes', RestauranteController::class);
     Route::apiResource('produtos', ProdutoController::class);
     Route::apiResource('pedidos', PedidoController::class);
-    Route::apiResource('itemspedidos', PedidoController::class);
+    Route::apiResource('itenspedidos', ItemPedidoController::class);
     Route::apiResource('enderecos', EnderecoController::class);
     Route::apiResource('categoriaprodutos', CategoriaProdutoController::class);
 });

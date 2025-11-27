@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('restaurante_id')->constrained('restaurantes')->onDelete('cascade');
+            $table->foreignId('endereco_id')->constrained('enderecos')->onDelete('cascade');
             $table->decimal('total', 10, 2)->default(0);
             $table->string('status')->default('pendente');
             $table->timestamps();

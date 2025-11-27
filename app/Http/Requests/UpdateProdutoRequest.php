@@ -25,7 +25,7 @@ class UpdateProdutoRequest extends FormRequest
             'nome' => 'required|string|max:150',
             'preco' => 'required|numeric|min:0',
             'descricao' => 'nullable|string',
-            'categoria_id' => 'required|exists:categorias,id',
+            'categoria_id' => 'required|exists:categoria_produtos,id',
             'restaurante_id' => 'required|exists:restaurantes,id',
         ];
     }
